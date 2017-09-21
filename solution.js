@@ -95,7 +95,6 @@ function drawNestedSetsTree(data, domNode) {
      * https://developer.mozilla.org/en-US/docs/Web/Events/drag
      */
     document.addEventListener('drag', e => {
-      console.log('drag ' + e.target);
       dragged = e.target;
       e.target.style.opacity = .5;
     }, false);
@@ -109,7 +108,6 @@ function drawNestedSetsTree(data, domNode) {
     }, false);
 
     document.addEventListener('drop', e => {
-      console.log('drop ', e.target.childNodes);
       e.preventDefault();
       let ul = e.target.childNodes[1];
       if (!ul) {
@@ -126,7 +124,7 @@ function drawNestedSetsTree(data, domNode) {
   var root = reduce(data);
   return {
     save: () => {
-      let index = generator(0);
+      let index = generator(1);
       let nested = [];
       // recursive function for tree traversal
       let findli = (root) => {
