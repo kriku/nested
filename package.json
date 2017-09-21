@@ -1,0 +1,24 @@
+{
+  "name": "nested",
+  "version": "1.0.0",
+  "main": "solution.js",
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^0.10.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/http-server -a localhost"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kriku/nested.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kriku/nested/issues"
+  },
+  "homepage": "https://github.com/kriku/nested#readme",
+  "description": ""
+}

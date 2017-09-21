@@ -1,0 +1,45 @@
+[{
+  "title": "Clothing",
+  "left": 1,
+  "right": 22
+}, {
+  "title": "Men's",
+  "left": 2,
+  "right": 9
+}, {
+  "title": "Women's",
+  "left": 10,
+  "right": 21
+}, {
+  "title": "Suits",
+  "left": 3,
+  "right": 8
+}, {
+  "title": "Slacks",
+  "left": 4,
+  "right": 5
+}, {
+  "title": "Jackets",
+  "left": 6,
+  "right": 7
+}, {
+  "title": "Dresses",
+  "left": 11,
+  "right": 16
+}, {
+  "title": "Skirts",
+  "left": 17,
+  "right": 18
+}, {
+  "title": "Blouses",
+  "left": 19,
+  "right": 20
+}, {
+  "title": "Evening Gowns",
+  "left": 12,
+  "right": 13
+}, {
+  "title": "Sun Dresses",
+  "left": 14,
+  "right": 15
+}]

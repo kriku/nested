@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="solution.js"></script>
+    <script>
+      let data = null;
+      let r = new XMLHttpRequest();
+      r.open('GET', 'tree.json', true);
+      r.onreadystatechange = function () {
+        if (r.readyState != 4 || r.status != 200)
+          return;
+        data = JSON.parse(r.responseText);
+        drawNestedSetsTree(data, document.getElementById('root'));
+      };
+      r.send();
+    </script>
+  </body>
+</html>
