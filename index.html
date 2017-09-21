@@ -21,9 +21,9 @@
         if (r.readyState != 4 || r.status != 200)
           return;
         data = JSON.parse(r.responseText);
-        let tree = drawNestedSetsTree(data, document.getElementById('root'));
+        let root = document.getElementById('root');
+        let tree = drawNestedSetsTree(data, root);
         window.tree = tree;
-        tree.save();
       };
       r.send();
     </script>

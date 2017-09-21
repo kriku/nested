@@ -128,27 +128,25 @@ function drawNestedSetsTree(data, domNode) {
     save: () => {
       let index = generator(0);
       let nested = [];
+      // recursive function for tree traversal
       let findli = (root) => {
         let left, right;
         let children = root.childNodes;
+        // count index only on special leaves
         if (root.nodeName == 'LI') {
           left = index();
         }
-        // this kind of traversal works backwards
-        // but most efficient
-        // for (let i=children.length;i>0;i) {
-        //   findli(children[--i]);
-        // }
-        // adequate traversing:
+        // dfs traversing:
         for (let i=0, len=children.length; i < len; i++) {
           findli(children[i]);
         }
+        // special leaves
         if (root.nodeName == 'LI') {
           right = index();
           let entity = {
-            "title":root.childNodes[0].nodeValue,
-            "left":left,
-            "right":right
+            "title": root.childNodes[0].nodeValue,
+            "left" : left,
+            "right": right
           };
           nested.push(entity);
         }
