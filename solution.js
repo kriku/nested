@@ -148,7 +148,7 @@ function drawNestedSetsTree(data, domNode) {
           };
           nested.push(entity);
         }
-        return JSON.stringify(nested);
+        return JSON.stringify(nested, null, 2);
       };
       return findli(domRoot);
     }
