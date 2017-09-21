@@ -8,7 +8,7 @@ function drawNestedSetsTree(data, domNode) {
       children: []
     };
     let trueroot = root;
-    const domRoot = document.createElement('UL');
+    // const domRoot = document.createElement('UL');
 
     data.sort((a, b) => (a.left - b.left));
 
@@ -27,9 +27,11 @@ function drawNestedSetsTree(data, domNode) {
     return trueroot;
   };
 
-  seen = [];
-
-  var replacer = function(key, value) {
+  // just for replacing cyclic values
+  // because of it, in resulting structure
+  // parents of the nodes is null
+  let seen = [];
+  var replacer = (key, value) => {
     if (value != null && typeof value == "object") {
       if (seen.indexOf(value) >= 0) {
         return null;
@@ -40,40 +42,7 @@ function drawNestedSetsTree(data, domNode) {
   };
 
   var root = document.createElement('PRE');
-  // root.innerHTML = JSON.stringify(data, null, 2);
+  // root.innerHTML = JSON.stringify(reduce(data), null, 2);
   root.innerHTML = JSON.stringify(reduce(data), replacer, 2);
   domNode.appendChild(root);
 }
-
-
-
-// let put = (root, data) => {
-//   if (!root.children) root.children = [];
-//   data.forEach(node => {
-//     if (root.left < node.left && node.right < root.right) {
-//       node.parent = root;
-//       root.children.push(node);
-//       put(node, data);
-//     }
-//   });
-// };
-// let clean = (root) => {
-//   root.children.forEach(node => {
-//     clean(node);
-//   });
-//   console.log(root);
-//   if (root.parent) {
-//     console.log(root.parent);
-//     if (root.parent.parent) {
-//       console.log(root.parent.parent);
-//       let compare = (child) => {
-//         return (child.title == root.title && child.left == root.left && child.right == root.right);
-//       };
-//       if (root.parent.parent.children.filter(compare).length > 0) {
-//         root.parent.parent.children.splice(root.parent.parent.children.indexOf(root));
-//       }
-//     }
-//   }
-
-// put(root, data);
-// clean(root);
