@@ -5,7 +5,29 @@ function drawNestedSetsTree(data, domNode) {
 
     const append = (dom, node) => {
       let el = document.createElement('LI');
+      // el.setAttribute("draggable", "true");
+      el.addEventListener("dblclick", (e) => {
+        let parent = e.target.parentNode;
+        let ul = e.target.childNodes[1];
+        if (ul) {
+          let children = ul.childNodes;
+          for (let i=children.length;i>0;i) {
+            parent.appendChild(children[--i]);
+          }
+        }
+        parent.removeChild(e.target);
+        e.stopPropagation();
+      }, false);
+
+      // el.addEventListener("drag", (e) => {
+      //   console.log(e.target);
+      //   e.DataTransfer.setData("object", e.target);
+      //   e.stopPropagation();
+      // }, false);
+      // could be changed to UL
+
       node.dom = el;
+      node.truedom = el;
       el.innerText = node.title;
       dom.appendChild(el);
       return el;
@@ -14,6 +36,7 @@ function drawNestedSetsTree(data, domNode) {
     let root = {
       parent: null,
       dom: domRoot,
+      truedom: domRoot,
       left: Number.NEGATIVE_INFINITY,
       right: Number.POSITIVE_INFINITY,
       children: []
@@ -54,7 +77,7 @@ function drawNestedSetsTree(data, domNode) {
   var root = reduce(data);
   return {
     save: () => {
-      console.log(domRoot);
+      console.log("save");
     }
   };
 }
