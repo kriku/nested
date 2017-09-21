@@ -5,12 +5,13 @@ function drawNestedSetsTree(data, domNode) {
 
   const domRoot = document.createElement('UL');
 
+  const generator = (prefix) => {
+    let id = 0;
+    return () => (prefix + id++);
+  };
+
   /* traversing set model, construct tree structure */
   const reduce = data => {
-    let generator = (prefix) => {
-      let id = 0;
-      return () => (prefix + id++);
-    };
     id = generator('draggable_');
 
     /* function has side effects on node argument
@@ -70,7 +71,6 @@ function drawNestedSetsTree(data, domNode) {
       }
       if (root.left < node.left && node.right < root.right) {
         node.parent = root;
-        node.depth = root.depth + 1;
 
         if (!root.children) {
           root.children = [];
@@ -126,7 +126,29 @@ function drawNestedSetsTree(data, domNode) {
   var root = reduce(data);
   return {
     save: () => {
-      console.log('save');
+      let index = generator(0);
+      let nested = [];
+      let findli = (root) => {
+        let left, right;
+        let children = root.childNodes;
+        if (root.nodeName == 'LI') {
+          left = index();
+        }
+        for (let i=children.length;i>0;i) {
+          findli(children[--i]);
+        }
+        if (root.nodeName == 'LI') {
+          right = index();
+          let entity = {
+            "title":root.childNodes[0].nodeValue,
+            "left":left,
+            "right":right
+          }
+          nested.push(entity);
+        }
+        return JSON.stringify(nested);
+      };
+      return findli(domRoot);
     }
   };
 }

@@ -22,6 +22,7 @@
           return;
         data = JSON.parse(r.responseText);
         let tree = drawNestedSetsTree(data, document.getElementById('root'));
+        window.tree = tree;
         tree.save();
       };
       r.send();
