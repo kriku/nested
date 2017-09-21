@@ -1,12 +1,27 @@
+/* function build tree structure from nested set
+ * create DOM-tree from data, append tree to domNode
+ */
 function drawNestedSetsTree(data, domNode) {
 
   const domRoot = document.createElement('UL');
-  const reduce = data => {
 
+  /* traversing set model, construct tree structure */
+  const reduce = data => {
+    let generator = (prefix) => {
+      let id = 0;
+      return () => (prefix + id++);
+    };
+    id = generator('draggable_');
+
+    /* function has side effects on node argument
+     * create LI element, append to DOM,
+     * effects on node.dom and node.truedom values
+     * also addEventListener on dblclick and d'n'd
+     */
     const append = (dom, node) => {
       let el = document.createElement('LI');
-      // el.setAttribute("draggable", "true");
-      el.addEventListener("dblclick", (e) => {
+
+      el.addEventListener('dblclick', (e) => {
         let parent = e.target.parentNode;
         let ul = e.target.childNodes[1];
         if (ul) {
@@ -19,13 +34,14 @@ function drawNestedSetsTree(data, domNode) {
         e.stopPropagation();
       }, false);
 
-      // el.addEventListener("drag", (e) => {
-      //   console.log(e.target);
-      //   e.DataTransfer.setData("object", e.target);
-      //   e.stopPropagation();
-      // }, false);
-      // could be changed to UL
+      el.setAttribute('id', id());
+      el.setAttribute('draggable', 'true');
+      el.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', e.target.id);
+        e.stopPropagation();
+      }, false);
 
+      // could be changed to UL
       node.dom = el;
       node.truedom = el;
       el.innerText = node.title;
@@ -54,6 +70,7 @@ function drawNestedSetsTree(data, domNode) {
       }
       if (root.left < node.left && node.right < root.right) {
         node.parent = root;
+        node.depth = root.depth + 1;
 
         if (!root.children) {
           root.children = [];
@@ -71,13 +88,45 @@ function drawNestedSetsTree(data, domNode) {
     });
 
     domNode.appendChild(domRoot);
+
+    let dragged;
+
+    /* events fired on the draggable target
+     * https://developer.mozilla.org/en-US/docs/Web/Events/drag
+     */
+    document.addEventListener('drag', e => {
+      console.log('drag ' + e.target);
+      dragged = e.target;
+      e.target.style.opacity = .5;
+    }, false);
+
+    document.addEventListener('dragend', e => {
+        e.target.style.opacity = '';
+    }, false);
+
+    document.addEventListener('dragover', e => {
+        e.preventDefault();
+    }, false);
+
+    document.addEventListener('drop', e => {
+      console.log('drop ', e.target.childNodes);
+      e.preventDefault();
+      let ul = e.target.childNodes[1];
+      if (!ul) {
+        ul = document.createElement('UL');
+        e.target.appendChild(ul);
+      }
+      dragged.parentNode.removeChild(dragged);
+      ul.appendChild(dragged);
+    }, false);
+
     return trueroot;
   };
 
   var root = reduce(data);
   return {
     save: () => {
-      console.log("save");
+      console.log('save');
     }
   };
 }
