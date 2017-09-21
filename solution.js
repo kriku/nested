@@ -1,5 +1,6 @@
 function drawNestedSetsTree(data, domNode) {
 
+  const domRoot = document.createElement('UL');
   const reduce = data => {
 
     const append = (dom, node) => {
@@ -10,7 +11,6 @@ function drawNestedSetsTree(data, domNode) {
       return el;
     };
 
-    const domRoot = document.createElement('UL');
     let root = {
       parent: null,
       dom: domRoot,
@@ -52,4 +52,9 @@ function drawNestedSetsTree(data, domNode) {
   };
 
   var root = reduce(data);
+  return {
+    save: () => {
+      console.log(domRoot);
+    }
+  };
 }

@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8"/>
     <title>Document</title>
+    <style>
+      ul {
+        font-size: 1.5rem;
+        line-height: 1.5;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
@@ -15,7 +21,8 @@
         if (r.readyState != 4 || r.status != 200)
           return;
         data = JSON.parse(r.responseText);
-        drawNestedSetsTree(data, document.getElementById('root'));
+        let tree = drawNestedSetsTree(data, document.getElementById('root'));
+        tree.save();
       };
       r.send();
     </script>
