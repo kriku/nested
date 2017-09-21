@@ -134,8 +134,14 @@ function drawNestedSetsTree(data, domNode) {
         if (root.nodeName == 'LI') {
           left = index();
         }
-        for (let i=children.length;i>0;i) {
-          findli(children[--i]);
+        // this kind of traversal works backwards
+        // but most efficient
+        // for (let i=children.length;i>0;i) {
+        //   findli(children[--i]);
+        // }
+        // adequate traversing:
+        for (let i=0, len=children.length; i < len; i++) {
+          findli(children[i]);
         }
         if (root.nodeName == 'LI') {
           right = index();
@@ -143,7 +149,7 @@ function drawNestedSetsTree(data, domNode) {
             "title":root.childNodes[0].nodeValue,
             "left":left,
             "right":right
-          }
+          };
           nested.push(entity);
         }
         return JSON.stringify(nested);
